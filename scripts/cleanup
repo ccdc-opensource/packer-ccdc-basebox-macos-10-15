@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Disable hibernation
+pmset hibernatemode 0 && \
+    rm -f /var/vm/sleepimage
+
+# Clear cache
+rm -rf /Users/vagrant/Library/Caches/* \
+    /Library/Caches/*
+
+# Clear bash history
+rm -f /Users/vagrant/.bash_history
+
+# Clear logs
+rm -rf /private/var/log/*
+
+# ignore errors in rm
+exit 0
+# This won't work as vmware is using linked clones :(
+# /Library/Application\ Support/VMware\ Tools/vmware-tools-cli disk shrinkonly

@@ -1,0 +1,13 @@
+#!/bin/sh
+source /tmp/continue_after_acceptance
+
+echo "Installing VMware tools.. second time"
+installer -pkg "$INSTALLER_PKG" -target /
+
+sleep 2
+echo "Detaching mount point, first time, should not fail"
+hdiutil detach $TMPMOUNT
+echo "Detaching mount point, second time, might fail"
+hdiutil detach $TMPMOUNT
+rm -rf $TMPMOUNT
+rm -rf $TMPDOWNLOAD

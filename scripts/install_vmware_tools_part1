@@ -1,0 +1,31 @@
+#!/bin/sh
+
+TMPDOWNLOAD=`/usr/bin/mktemp -d /tmp/vmware-tools-download.XXXX`
+cd $TMPDOWNLOAD
+curl http://softwareupdate.vmware.com/cds/vmw-desktop/fusion/11.5.1/15018442/core/com.vmware.fusion.zip.tar --output com.vmware.fusion.zip.tar
+tar xvf com.vmware.fusion.zip.tar
+unzip com.vmware.fusion.zip
+
+ISOIMAGE="$TMPDOWNLOAD/payload/VMware Fusion.app/Contents/Library/isoimages/darwin.iso"
+if [ ! -e "$ISOIMAGE" ]; then
+    echo "Couldn't locate VMware iso image at $ISOIMAGE!"
+    exit 1
+fi
+
+TMPMOUNT=`/usr/bin/mktemp -d /tmp/vmware-tools.XXXX`
+hdiutil attach "$ISOIMAGE" -mountpoint "$TMPMOUNT"
+INSTALLER_PKG="$TMPMOUNT/Install VMware Tools.app/Contents/Resources/VMware Tools.pkg"
+if [ ! -e "$INSTALLER_PKG" ]; then
+    echo "Couldn't locate VMware installer pkg at $INSTALLER_PKG!"
+    exit 1
+fi
+cat > /tmp/continue_after_acceptance <<EOF
+export TMPMOUNT="$TMPMOUNT"
+export TMPDOWNLOAD="$TMPDOWNLOAD"
+export INSTALLER_PKG="$INSTALLER_PKG"
+EOF
+
+echo "Installing VMware tools.. this will fail"
+installer -pkg "$INSTALLER_PKG" -target /
+
+exit 0

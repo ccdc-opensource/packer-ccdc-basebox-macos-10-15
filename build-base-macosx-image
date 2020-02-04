@@ -1,0 +1,29 @@
+#!/bin/bash
+
+IMAGE_VERSION="10.15"
+
+IMAGE_NAME="ccdc-basebox-macosx-$IMAGE_VERSION"
+MACINBOX=/usr/local/bin/macinbox
+
+if [ ! -x $MACINBOX ]
+then
+    echo "This script requires that the macinbox gem be installed as root"
+    exit 1
+fi
+
+if [ $USER != "root" ]
+then
+    echo "Please run this script with sudo"
+    exit 1
+fi
+
+$MACINBOX \
+    --verbose \
+    --debug \
+    --name $IMAGE_NAME \
+    --disk 400 \
+    --memory 4096 \
+    --cpu 4 \
+    --no-hidpi \
+    --no-fullscreen \
+    # End of macinbox options

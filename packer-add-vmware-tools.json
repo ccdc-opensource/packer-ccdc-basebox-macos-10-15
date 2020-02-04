@@ -1,0 +1,37 @@
+{
+    "builders": [
+      {
+        "communicator": "ssh",
+        "source_path": "ccdc-basebox-macosx-10.15",
+        "box_name": "ccdc-basebox-VAGRANTSLASH-macosx-10.15.3",
+        "provider": "vmware_desktop",
+        "skip_add": true,
+        "type": "vagrant"
+      }
+    ],
+    "provisioners": [
+      {
+        "execute_command": "chmod +x {{ .Path }}; sudo {{ .Vars }} {{ .Path }}",
+        "scripts": [
+          "./scripts/install_vmware_tools_part1"
+        ],
+        "environment_vars": [
+        ],
+        "type": "shell"
+      },
+      {
+        "type": "breakpoint",
+        "note": "Allow the VMWare kernel extensions and then let the build continue"
+      },
+      {
+        "execute_command": "chmod +x {{ .Path }}; sudo {{ .Vars }} {{ .Path }}",
+        "scripts": [
+          "./scripts/install_vmware_tools_part2",
+          "./scripts/cleanup"
+        ],
+        "environment_vars": [
+        ],
+        "type": "shell"
+      }
+    ]
+}
