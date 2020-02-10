@@ -1,2 +1,5 @@
 *.box
 /output-vagrant/
+/output/packer-vmware/
+/packer_cache/
+vsphere-environment-do-not-add
