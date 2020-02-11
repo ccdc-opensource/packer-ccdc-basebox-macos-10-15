@@ -30,21 +30,21 @@ then
 
     CHALLENGERESPONSE="ChallengeResponseAuthentication no"
     if grep -q -E "^[[:space:]]*ChallengeResponseAuthentication" "$SSHD_CONFIG"; then
-        sed -i "s/^\s*ChallengeResponseAuthentication.*/${CHALLENGERESPONSE}/" "$SSHD_CONFIG"
+        sed -i -e "s/^\s*ChallengeResponseAuthentication.*/${CHALLENGERESPONSE}/" "$SSHD_CONFIG"
     else
         echo "$CHALLENGERESPONSE" >>"$SSHD_CONFIG"
     fi
 
     PASSWORDAUTH="PasswordAuthentication no"
     if grep -q -E "^[[:space:]]*PasswordAuthentication" "$SSHD_CONFIG"; then
-        sed -i "s/^\s*PasswordAuthentication.*/${PASSWORDAUTH}/" "$SSHD_CONFIG"
+        sed -i -e "s/^\s*PasswordAuthentication.*/${PASSWORDAUTH}/" "$SSHD_CONFIG"
     else
         echo "$PASSWORDAUTH" >>"$SSHD_CONFIG"
     fi
 
     USEPAM="UsePAM no"
     if grep -q -E "^[[:space:]]*UsePAM" "$SSHD_CONFIG"; then
-        sed -i "s/^\s*UsePAM.*/${USEPAM}/" "$SSHD_CONFIG"
+        sed -i -e "s/^\s*UsePAM.*/${USEPAM}/" "$SSHD_CONFIG"
     else
         echo "$USEPAM" >>"$SSHD_CONFIG"
     fi

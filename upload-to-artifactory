@@ -12,16 +12,13 @@ then
 fi
 
 pushd $DIR
-OSX_VERSION=10.15.3
+OSX_VERSION=10.15
 BOX_NAME="ccdc-basebox/macosx-$OSX_VERSION"
 PROVIDER="vmware_desktop"
 BOX_VERSION="$(date +%Y%m%d).0"
 FILENAME=$BOX_NAME.$BOX_VERSION.$PROVIDER.box
 
 PATH_TO_FILE=./output-vagrant/package.box
-rm -f $PATH_TO_FILE
-echo "Exporting macinbox output to a local file"
-vagrant box repackage ccdc-basebox-macosx-10.15 vmware_desktop $OSX_VERSION
 
 echo "pushing box to artifactory"
 curl -H "X-JFrog-Art-Api:$ARTIFACTORY_API_KEY" -T $PATH_TO_FILE "https://artifactory.ccdc.cam.ac.uk/ccdc-vagrant-repo/$FILENAME;box_name=$BOX_NAME;box_provider=$PROVIDER;box_version=$BOX_VERSION"
