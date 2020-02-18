@@ -3,10 +3,11 @@
     {
       "type": "vagrant",
       "communicator": "ssh",
-      "source_path": "ccdc-basebox-macosx-10.15",
+      "source_path": "{{user `macinbox_image_name`}}",
       "box_name": "ccdc-basebox-VAGRANTSLASH-macosx-10.15",
       "provider": "vmware_desktop",
-      "skip_add": true
+      "skip_add": true,
+      "ssh_password": "{{user `vagrant_user_final_password`}}"
     },
     {
       "type": "vmware-vmx",
@@ -69,6 +70,7 @@
         "{{template_dir}}/scripts/install_vmware_tools_part1"
       ],
       "environment_vars": [
+        "VAGRANT_USER_FINAL_PASSWORD={{user `vagrant_user_final_password`}}",
         "CUSTOMISE_FOR_BUILDMACHINE={{user `customise_for_buildmachine`}}",
         "HOME_DIR=/Users/vagrant"
       ]
@@ -88,6 +90,7 @@
   ],
   "variables": {
     "customise_for_buildmachine": "0",
+    "vagrant_user_final_password": "{{env `VAGRANT_USER_FINAL_PASSWORD`}}",
     "vmware_center_host": "{{env `VMWARECENTER_HOST`}}",
     "vmware_center_vm_name": "{{env `VMWARECENTER_VM_NAME`}}",
     "vmware_center_cluster_name": "{{env `VMWARECENTER_CLUSTER_NAME`}}",
@@ -100,6 +103,7 @@
     "vmware_center_password": "{{env `VMWARECENTER_PASSWORD`}}"
   },
   "sensitive-variables": [
-    "vmware_center_password"
+    "vmware_center_password",
+    "vagrant_user_final_password"
   ]
 }

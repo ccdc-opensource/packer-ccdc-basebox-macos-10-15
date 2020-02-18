@@ -1,8 +1,6 @@
 #!/bin/bash
 
-IMAGE_VERSION="10.15"
-
-IMAGE_NAME="ccdc-basebox-macosx-$IMAGE_VERSION"
+IMAGE_NAME="macinbox-vagrant-10.15"
 MACINBOX=/usr/local/bin/macinbox
 
 if [ ! -x $MACINBOX ]
@@ -13,7 +11,7 @@ fi
 
 if [ $USER != "root" ]
 then
-    echo "Please run this script with sudo"
+    echo "Please run this script with sudo --preserve-env=VAGRANT_HOME ./build-base-macosx-image-for-vsphere"
     exit 1
 fi
 

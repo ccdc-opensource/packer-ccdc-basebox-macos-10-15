@@ -65,13 +65,20 @@ Once you have completed these steps, you may go back to the terminal where packe
 
 ## Uploading a vagrant box to artifactory so that others may consume it
 
-You need to run the build-vmware.sh script and follow the instructions on generating an image with VMWare tools.
-Then you need to run the upload-to-artifactory script.
+You need to run:
+
+- the build-base-macosx-image script to create a base image for vagrant using `sudo --preserve-env=VAGRANT_HOME ./build-base-macosx-image`
+- the build-vmware.sh script and follow the instructions on generating an image with VMWare tools.
+- the upload-to-artifactory script.
 The script has instructions on how to get an API key to upload the image to artifactory.
 
 ## Uploading a template to vSphere
 
-You need to run the build-vsphere.sh script and follow the instructions on generating an image with VMWare tools.
+You need to run:
+
+- the build-base-macosx-image-for-vsphere script to create a base image for vsphere (this has a different password) using `sudo --preserve-env=VAGRANT_HOME ./build-base-macosx-image-for-vsphere`
+- the build-vsphere.sh script and follow the instructions on generating an image with VMWare tools.
+
 The script requires that you copy the vsphere-environment-do-not-add-sample to vsphere-environment-do-not-add and set the relevant environment variables
 
 ## Further documentation
