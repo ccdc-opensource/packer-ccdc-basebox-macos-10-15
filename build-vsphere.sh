@@ -25,9 +25,11 @@ source ./vsphere-environment-do-not-add
 echo 'cleaning up intermediate output'
 rm -rf ./output/packer-vmware
 
+export PACKER_LOG='1'
 echo 'building stage 1 macosx image for vsphere'
 PACKER_LOG=1 packer build \
   -only=vmware-vmx \
+  -on-error=ask \
   -var "macinbox_image_name=$MACINBOX_IMAGE_NAME" \
   -var 'guest_os_type=darwin18-64' \
   -var 'customise_for_buildmachine=1' \
