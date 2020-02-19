@@ -25,7 +25,7 @@ source ./vsphere-environment-do-not-add
 echo 'cleaning up intermediate output'
 rm -rf ./output/packer-vmware
 
-export PACKER_LOG='1'
+# export PACKER_LOG='1'
 echo 'building stage 1 macosx image for vsphere'
 PACKER_LOG=1 packer build \
   -only=vmware-vmx \
