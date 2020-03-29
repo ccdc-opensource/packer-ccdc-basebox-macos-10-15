@@ -39,8 +39,11 @@ To create a base image, one should:
 - consider export VAGRANT_HOME=/Volumes/some volume with enough space to do all this stuff!
 - temporarily disable Sophos Antivirus agent as it seems to create a situation where the virtual disks used to create the base image refuse to mount with a permissions error. IF this happens, try restarting the mac, disabling the antivirus on startup and repeat the process.
 - run softwareupdate to obtain the mac os installer. An example command line is this
-    softwareupdate --fetch-full-installer --full-installer-version 10.15.3
+    softwareupdate --fetch-full-installer --full-installer-version 10.15.4
 - run sudo "VAGRANT_HOME=${VAGRANT_HOME}" build-base-macosx-image
+- Keep the VMWare Fusion application running! (See https://kb.vmware.com/s/article/65163 for the reason)
+
+If you get this error: "AppleXPC: Failed to connect to service com.vmware.DiskHelper", read the advice above.
 
 This will run macinbox and create a basic MacOS 10.15 image with 400Gb of disk and a default vagrant user. VMWare tools is not installed
 The image is stored in your VAGRANT_HOME directory, along with other boxes that you might be using

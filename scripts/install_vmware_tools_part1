@@ -2,7 +2,7 @@
 
 TMPDOWNLOAD=`/usr/bin/mktemp -d /tmp/vmware-tools-download.XXXX`
 cd $TMPDOWNLOAD
-curl http://softwareupdate.vmware.com/cds/vmw-desktop/fusion/11.5.1/15018442/core/com.vmware.fusion.zip.tar --output com.vmware.fusion.zip.tar
+curl http://softwareupdate.vmware.com/cds/vmw-desktop/fusion/11.5.3/15870345/core/com.vmware.fusion.zip.tar --output com.vmware.fusion.zip.tar
 tar xvf com.vmware.fusion.zip.tar
 unzip com.vmware.fusion.zip
 

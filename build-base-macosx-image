@@ -11,7 +11,7 @@ fi
 
 if [ $USER != "root" ]
 then
-    echo "Please run this script with sudo --preserve-env=VAGRANT_HOME ./build-base-macosx-image-for-vsphere"
+    echo "Please run this script with sudo --preserve-env=VAGRANT_HOME ./build-base-macosx-image"
     exit 1
 fi
 
