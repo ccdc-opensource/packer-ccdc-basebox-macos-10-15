@@ -15,7 +15,7 @@
       "ssh_username": "vagrant",
       "ssh_password": "{{user `vagrant_user_final_password`}}",
       "ssh_port": 22,
-      "ssh_wait_timeout": "10000s",
+      "ssh_timeout": "10000s",
       "shutdown_command": "sudo /sbin/halt -l ",
       "vm_name": "{{user `vmware_center_vm_name`}}",
       "output_directory": "{{ user `build_directory` }}/packer-vmware",
