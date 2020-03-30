@@ -83,7 +83,6 @@
       "type": "shell",
       "execute_command": "chmod +x {{ .Path }}; sudo {{ .Vars }} {{ .Path }}",
       "scripts": [
-        "{{template_dir}}/scripts/install_vmware_tools_part2",
         "{{template_dir}}/scripts/cleanup"
       ]
     }

@@ -1,4 +1,5 @@
 #!/bin/sh
+# This script is now unused as the install succeeds the first time
 source /tmp/continue_after_acceptance
 
 echo "Installing VMware tools.. second time"

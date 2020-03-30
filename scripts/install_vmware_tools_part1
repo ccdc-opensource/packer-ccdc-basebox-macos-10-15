@@ -28,4 +28,14 @@ EOF
 echo "Installing VMware tools.. this will fail"
 installer -pkg "$INSTALLER_PKG" -target /
 
+# Should installation fail for some reason
+# comment out this part, until removal of $TMPDOWNLOAD
+# and reenable the repetition of the install in the part2 script
+echo "Detaching mount point, first time, should not fail"
+hdiutil detach $TMPMOUNT
+echo "Detaching mount point, second time, might fail"
+hdiutil detach $TMPMOUNT
+rm -rf $TMPMOUNT
+rm -rf $TMPDOWNLOAD
+
 exit 0
