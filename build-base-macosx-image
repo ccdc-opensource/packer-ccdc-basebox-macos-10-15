@@ -21,6 +21,7 @@ $MACINBOX \
     --name $IMAGE_NAME \
     --disk 400 \
     --memory 4096 \
+    --vmware /Applications/VMware\ Fusion.app \
     --cpu 4 \
     --no-hidpi \
     --no-fullscreen \
