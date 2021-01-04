@@ -6,6 +6,7 @@ SSHD_CONFIG="/etc/ssh/sshd_config"
 
 if [ "$CUSTOMISE_FOR_BUILDMACHINE" == "1" ]
 then
+    mkdir -p $HOME_DIR/.ssh
     echo "Setting up allowed ssh keys for vagrant user on VMWare buildmachines"
     # only allow the following users in
     # Build provisioner from vagrant
