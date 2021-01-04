@@ -2,7 +2,7 @@
 
 TMPDOWNLOAD=`/usr/bin/mktemp -d /tmp/vmware-tools-download.XXXX`
 cd $TMPDOWNLOAD
-curl http://softwareupdate.vmware.com/cds/vmw-desktop/fusion/11.5.5/16269456//core/com.vmware.fusion.zip.tar --output com.vmware.fusion.zip.tar
+curl http://softwareupdate.vmware.com/cds/vmw-desktop/fusion/12.1.0/17195230/core/com.vmware.fusion.zip.tar --output com.vmware.fusion.zip.tar
 tar xvf com.vmware.fusion.zip.tar
 unzip com.vmware.fusion.zip
 
@@ -25,7 +25,8 @@ export TMPDOWNLOAD="$TMPDOWNLOAD"
 export INSTALLER_PKG="$INSTALLER_PKG"
 EOF
 
-echo "Installing VMware tools.. this will fail"
+echo "Installing VMware tools.. this might fail"
 installer -pkg "$INSTALLER_PKG" -target /
 
+echo "Remember to run updates, and rerun the installation of vmware tools if it failed"
 exit 0
