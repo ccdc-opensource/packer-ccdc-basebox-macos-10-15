@@ -26,7 +26,7 @@ packer build \
   -except=vsphere,vsphere-template \
   -var "macinbox_image_name=$MACINBOX_IMAGE_NAME" \
   -var 'guest_os_type=darwin19-64' \
-  -var 'virtual_hw_version=16' \
+  -var 'virtual_hw_version=18' \
   -var 'build_directory=./output/' \
   -var 'box_basename=ccdc-basebox/macos-$MACOS_VERSION' \
   -var "macinbox_vmx_location=$VAGRANT_HOME/boxes/$MACINBOX_IMAGE_NAME/$LAST_MACINBOX_VERSION/vmware_desktop/" \
