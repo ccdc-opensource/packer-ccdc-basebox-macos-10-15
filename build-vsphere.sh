@@ -29,11 +29,12 @@ rm -rf ./output/packer-vmware
 echo 'building stage 1 macosx image for vsphere'
 PACKER_LOG=1 packer build \
   -only=vmware-vmx \
+  -except=vagrant \
   -on-error=ask \
   -var "macinbox_image_name=$MACINBOX_IMAGE_NAME" \
   -var 'guest_os_type=darwin18-64' \
   -var 'customise_for_buildmachine=1' \
-  -var 'virtual_hw_version=15' \
+  -var 'virtual_hw_version=18' \
   -var 'build_directory=./output/' \
   -var 'box_basename=ccdc-basebox/macos-$MACOS_VERSION' \
   -var 'vmx_remove_ethernet_interfaces=false' \
