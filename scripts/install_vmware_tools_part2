@@ -1,3 +1,4 @@
 #!/bin/sh
 echo "Zeroing out empty space"
 cat /dev/zero > zerofile ; rm zerofile
+echo "Zeroes added"
