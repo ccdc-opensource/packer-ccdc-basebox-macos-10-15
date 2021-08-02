@@ -58,6 +58,11 @@
         "datacenter": "{{user `vmware_center_datacenter`}}",
         "folder": "/packer-templates/os/macosx-10.15",
         "keep_input_artifact": true
+      },
+      {
+        "type": "vagrant",
+        "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
+        "keep_input_artifact": true
       }
     ]
   ],
