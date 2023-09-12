@@ -1,0 +1,24 @@
+---
+roles:
+  - src: git@github.com:ccdc-opensource/ansible-role-vagrant-base-box
+    scm: git
+    name: ccdc.vagrant-base-box
+    version: add-macos
+  - src: git@github.com:ccdc-opensource/ansible-role-install-vm-tools
+    scm: git
+    name: ccdc.install-vm-tools
+    version: add-macos
+  - src: git@github.com:ccdc-opensource/ansible-role-compact-vm-image
+    scm: git
+    name: ccdc.compact-vm-image
+    version: add-macos
+  - src: https://github.com/feffi/ansible-macos-standby.git
+    name: feffi.macos-standby
+  - src: https://github.com/florianpiesche/ansible-macos-defaults/
+    version: patch-1
+    name: feffi.macos-defaults
+  - src: geerlingguy.homebrew
+
+
+collections:
+  - devsec.hardening

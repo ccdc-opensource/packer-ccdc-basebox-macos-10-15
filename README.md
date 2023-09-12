@@ -1,4 +1,14 @@
-# CCDC Basic MacOS Vagrant box
+# Build process
+
+## Preparing the iso
+
+- `brew install mist-cli`
+- `mist list installer --include-betas`
+- Pick the `BUILD` for the macOS version to create an image for and `export MACOS_BUILD=[Build ID]`
+- `sudo mist download installer $MACOS_BUILD iso --iso-name "macOS-%BUILD%.iso" --output-directory ./macos-iso/`
+- `shasum -a 256 macOS-$MACOS_BUILD.iso >> ./macos-iso/shasums.txt`
+
+## CCDC Basic MacOS Vagrant box
 
 The instructions and files in this directory make it possible (not easy!) to set up a basic MacOS box that can be used via Vagrant or deployed to a vSphere server as a template.
 
@@ -6,7 +16,7 @@ Standard vagrant commands can be used to start, provision, stop the VM itself on
 
 Building the box requires studying, asking questions that have complicated answers and understanding what's going on as there's a lot of complexity under the hood and it's not possible (yet) to avoid it.
 
-## Requirements to build this:
+## Requirements to build this
 - MacOS 10.15
 - VMWare Fusion (licence required)
 - Vagrant
