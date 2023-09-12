@@ -297,7 +297,7 @@ source "vsphere-iso" "macOS" {
   ]
   convert_to_template  = true
   CPUs                 = "${var.cpu_count}"
-  // disk_adapter_type    = "pvscsi"
+  disk_controller_type = "nvme"
   storage {
       disk_size = "${var.disk_size}"
       disk_thin_provisioned = true
