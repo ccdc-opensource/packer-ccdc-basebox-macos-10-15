@@ -309,6 +309,8 @@ source "vsphere-iso" "macOS" {
   iso_paths            = ["[macv01] 13.5-22G74.iso"]
   remove_cdrom         = true
   usb_controller       = ["usb", "xhci"]
+  http_port_max        = 65535
+  http_port_min        = 49152
   http_directory       = "http"
   iso_checksum         = "${var.iso_file_checksum}"
   RAM                  = var.ram_gb * 1024
