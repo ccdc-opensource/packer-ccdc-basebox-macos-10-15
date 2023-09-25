@@ -149,7 +149,7 @@ variable "boot_key_interval_iso" {
 }
 variable "boot_wait_iso" {
   type = string
-  default =  "35m"
+  default =  "3m"
 }
 variable "boot_keygroup_interval_iso" {
   type = string
@@ -215,7 +215,7 @@ source "vmware-iso" "macOS" {
   ssh_password         = "${var.user_password}"
   shutdown_command     = "sudo shutdown -h now"
   output_directory     = "${var.output_directory}"
-  guest_os_type        = "darwin20-64"
+  guest_os_type        = "darwin22-64"
   cdrom_adapter_type   = "sata"
   disk_size            = "${var.disk_size}"
   disk_adapter_type    = "nvme"
@@ -259,8 +259,6 @@ source "vmware-iso" "macOS" {
     "usb_xhci.pciSlotNumber"                   = "192"
     "usb_xhci.present"                         = "TRUE"
     "hgfs.linkRootShare"                       = "FALSE"
-    // "svga.present"                             = "FALSE"
-    // "appleGPU0.present"                        = "TRUE"
   }
   vmx_data_post = {
     "sata0:0.autodetect"     = "TRUE"
@@ -269,6 +267,8 @@ source "vmware-iso" "macOS" {
     "sata0:0.startConnected" = "FALSE"
     "sata0:0.present"        = "TRUE"
     "vhv.enable"             = "TRUE"
+    "svga.present"                             = "FALSE"
+    "appleGPU0.present"                        = "TRUE"
   }
   boot_wait              = var.boot_wait_iso
   boot_key_interval      = var.boot_key_interval_iso
@@ -283,12 +283,12 @@ source "vsphere-iso" "macOS" {
   boot_keygroup_interval = var.boot_keygroup_interval_iso
   boot_command = [
     "<enter><wait10s>",
-    "<leftSuperon><f5><leftSuperoff>",
-    "<leftCtrlon><f2><leftCtrloff>",
+    "<leftSuperon><wait2s><f5><wait2s><leftSuperoff>",
+    "<leftCtrlon><wait2s><f2><wait2s><leftCtrloff>",
     "u<down><down><down>",
     "<enter>",
-    "<leftSuperon><f5><leftSuperoff><wait10>",
-    "<leftCtrlon><f2><leftCtrloff>",
+    "<leftSuperon><wait2s><f5><wait2s><leftSuperoff><wait10>",
+    "<leftCtrlon><wait2s><f2><wait2s><leftCtrloff>",
     "w<down><down>",
     "<enter>",
     "curl -o /var/root/bootstrap.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/bootstrap.sh<enter>",
@@ -308,7 +308,7 @@ source "vsphere-iso" "macOS" {
   cdrom_type           = "sata"
   iso_paths            = ["[macv01] 13.5-22G74.iso"]
   remove_cdrom         = true
-  usb_controller       = ["usb", "xhci"]
+  usb_controller       = ["xhci"]
   http_port_max        = 65535
   http_port_min        = 49152
   http_directory       = "http"

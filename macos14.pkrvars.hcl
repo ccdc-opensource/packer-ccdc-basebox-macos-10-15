@@ -9,3 +9,5 @@ boot_command = [
     "chmod +x /var/root/bootstrap.sh<enter>",
     "PACKAGE_HTTP_SERVER=http://{{ .HTTPIP }}:{{ .HTTPPort}} /var/root/bootstrap.sh<enter>"
 ]
+user_username = "packer"
+user_password = "packer"
