@@ -309,6 +309,8 @@ source "vsphere-iso" "macOS" {
   iso_paths            = ["[macv01] 13.5-22G74.iso"]
   remove_cdrom         = true
   usb_controller       = ["xhci"]
+  vTPM                 = true
+  firmware             = "efi"
   http_port_max        = 65535
   http_port_min        = 49152
   http_directory       = "http"
@@ -330,6 +332,39 @@ source "vsphere-iso" "macOS" {
   network_adapters {
       network = "${var.vmware_center_vm_network}"
       network_card = "vmxnet3"
+  }
+  configuration_parameters = {
+    extraConfig = "
+      tools.upgrade.policy=manual
+      smc.present=TRUE
+      smbios.restrictSerialCharset=TRUE
+      ulm.disableMitigations=TRUE
+      ich7m.present=TRUE
+      hw.model=${var.hw_model}
+      hw.model.reflectHost=FALSE
+      smbios.reflectHost=FALSE
+      board-id=${var.board_id}
+      serialNumber=${var.serial_number}
+      serialNumber.reflectHost=FALSE
+      SMBIOS.use12CharSerialNumber=TRUE
+      usb_xhci:4.deviceType=hid
+      usb_xhci:4.parent=-1
+      usb_xhci:4.port=4
+      usb_xhci:4.present=TRUE
+      usb_xhci:6.deviceType=hub
+      usb_xhci:6.parent=-1
+      usb_xhci:6.port=6
+      usb_xhci:6.present=TRUE
+      usb_xhci:6.speed=2
+      usb_xhci:7.deviceType=hub
+      usb_xhci:7.parent=-1
+      usb_xhci:7.port=7
+      usb_xhci:7.present=TRUE
+      usb_xhci:7.speed=4
+      usb_xhci.pciSlotNumber=192
+      usb_xhci.present=TRUE
+      hgfs.linkRootShare=FALSE
+      "
   }
 }
 
