@@ -17,8 +17,8 @@ roles:
   - src: https://github.com/florianpiesche/ansible-macos-defaults/
     version: patch-1
     name: feffi.macos-defaults
-  - src: geerlingguy.homebrew
 
 
 collections:
   - devsec.hardening
+  - geerlingguy.mac

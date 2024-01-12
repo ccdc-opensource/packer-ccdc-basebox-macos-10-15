@@ -334,7 +334,7 @@ source "vsphere-iso" "macOS" {
       network_card = "vmxnet3"
   }
   configuration_parameters = {
-    extraConfig = "
+    extraConfig = <<-EOF
       tools.upgrade.policy=manual
       smc.present=TRUE
       smbios.restrictSerialCharset=TRUE
@@ -364,7 +364,7 @@ source "vsphere-iso" "macOS" {
       usb_xhci.pciSlotNumber=192
       usb_xhci.present=TRUE
       hgfs.linkRootShare=FALSE
-      "
+      EOF
   }
 }
 
@@ -376,7 +376,10 @@ build {
     "sources.vsphere-iso.macOS"
   ]
 
-  # Install Homebrew - this will also set up the Xcode Developer Tools required to run Ansible provisioning
+  provisioner "breakpoint" {
+    disable = false
+    note    = "Please install Homebrew at this point."
+  }
 
   provisioner "ansible" {
     playbook_file = "./ansible_provisioning/playbook.yaml"
