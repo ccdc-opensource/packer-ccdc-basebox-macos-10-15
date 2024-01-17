@@ -376,9 +376,18 @@ build {
     "sources.vsphere-iso.macOS"
   ]
 
-  provisioner "breakpoint" {
-    disable = false
-    note    = "Please install Homebrew at this point."
+  # Enable passwordless sudo
+  provisioner "shell" {
+    inline = ["echo '%admin ALL = (ALL) NOPASSWD: ALL' | sudo tee /private/etc/sudoers.d/passwordless-sudo.conf"]
+  }
+
+  # Install Homebrew
+  provisioner "shell" {
+    inline = [
+      "curl -fsSLo /tmp/homebrew.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh",
+      "/bin/bash /tmp/homebrew.sh",
+      "rm /tmp/homebrew.sh"
+    ]
   }
 
   provisioner "ansible" {
