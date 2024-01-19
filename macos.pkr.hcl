@@ -2,16 +2,20 @@ packer {
   required_version = ">= 1.7.0"
   required_plugins {
     ansible = {
-      version = ">= 1.0.0"
+      version = ">= 1.1.0"
       source: "github.com/hashicorp/ansible"
     }
     vmware = {
-      version = ">= 1.0.0"
+      version = ">= 1.0.9"
       source  = "github.com/hashicorp/vmware"
     }
     vsphere = {
-      version = ">= 1.0.0"
+      version = ">= 1.2.1"
       source: "github.com/hashicorp/vsphere"
+    }
+    vagrant = {
+      source  = "github.com/hashicorp/vagrant"
+      version = ">= 1.0.3"
     }
   }
 }
@@ -83,7 +87,7 @@ variable "cpu_count" {
 }
 variable "ram_gb" {
   type = number
-  default =  "6"
+  default =  "4"
 }
 variable "disk_size" {
   type = string
@@ -208,9 +212,9 @@ source "vmware-iso" "macOS" {
   vnc_disable_password = "${var.vnc_disable_password}"
   vnc_port_min         = "${var.vnc_port_min}"
   vnc_port_max         = "${var.vnc_port_max}"
-  display_name         = "{{build_name}} ${var.macos_version} base"
-  vm_name              = "{{build_name}}_${var.macos_version}_base"
-  vmdk_name            = "{{build_name}}_${var.macos_version}_base"
+  display_name         = "ccdc-basebox-macos-${var.macos_version}.${formatdate("YYYYMMDD", timestamp())}"
+  vm_name              = "ccdc-basebox-macos-${var.macos_version}.${formatdate("YYYYMMDD", timestamp())}"
+  vmdk_name            = "ccdc-basebox-macos-${var.macos_version}.${formatdate("YYYYMMDD", timestamp())}"
   ssh_username         = "${var.user_username}"
   ssh_password         = "${var.user_password}"
   shutdown_command     = "sudo shutdown -h now"
@@ -296,17 +300,63 @@ source "vsphere-iso" "macOS" {
     "PACKAGE_HTTP_SERVER=http://{{ .HTTPIP }}:{{ .HTTPPort}} /var/root/bootstrap.sh<enter>"
   ]
   convert_to_template  = true
+  vm_version           = 19
   CPUs                 = "${var.cpu_count}"
-  disk_controller_type = ["pvscsi"]
+  disk_controller_type = ["nvme"]
   storage {
       disk_size = "${var.disk_size}"
       disk_thin_provisioned = true
+      disk_controller_index = 0
   }
+  firmware             = "efi"
+  RAM                  = var.ram_gb * 1024
+  network_adapters {
+      network = "${var.vmware_center_vm_network}"
+      network_card = "vmxnet3"
+  }
+  video_ram            = 128 * 1024
   guest_os_type        = "darwin21_64Guest"
-  host                 = "${var.vmware_center_esxi_host}"
-  // headless             = "${var.headless}"
+  shutdown_command     = "echo 'vagrant' | sudo -S /sbin/halt -h -p"
+
+  configuration_parameters = {
+    "tools.upgrade.policy": "manual",
+    "smc.present": "TRUE",
+    "smc.version": "0",
+    "smbios.restrictSerialCharset": "TRUE",
+    "ulm.disableMitigations": "TRUE",
+    "ich7m.present": "TRUE",
+    "chipset.motherboardLayout": "acpi",
+    "hw.model": "${var.hw_model}",
+    "hw.model.reflectHost": "FALSE",
+    "smbios.reflectHost": "FALSE",
+    "board-id": "${var.board_id}",
+    "serialNumber": "${var.serial_number}",
+    "serialNumber.reflectHost": "FALSE",
+    "SMBIOS.use12CharSerialNumber": "TRUE",
+    "usb_xhci:4.deviceType": "hid",
+    "usb_xhci:4.parent": "-1",
+    "usb_xhci:4.port": "4",
+    "usb_xhci:4.present": "TRUE",
+    "usb_xhci:6.deviceType": "hub",
+    "usb_xhci:6.parent": "-1",
+    "usb_xhci:6.port": "6",
+    "usb_xhci:6.present": "TRUE",
+    "usb_xhci:6.speed": "2",
+    "usb_xhci:7.deviceType": "hub",
+    "usb_xhci:7.parent": "-1",
+    "usb_xhci:7.port": "7",
+    "usb_xhci:7.present": "TRUE",
+    "usb_xhci:7.speed": "4",
+    "usb_xhci.pciSlotNumber": "192",
+    "usb_xhci.present": "TRUE",
+    "hgfs.linkRootShare": "FALSE",
+    "vhv.enable": "TRUE",
+    "svga.present": "TRUE",
+    "appleGPU0.present": "FALSE"
+  }
+
   cdrom_type           = "sata"
-  iso_paths            = ["[macv01] 13.5-22G74.iso"]
+  iso_paths            = ["[macv04] 13.5-22G74.iso"]
   remove_cdrom         = true
   usb_controller       = ["xhci"]
   vTPM                 = true
@@ -314,14 +364,14 @@ source "vsphere-iso" "macOS" {
   http_port_max        = 65535
   http_port_min        = 49152
   http_directory       = "http"
-  iso_checksum         = "${var.iso_file_checksum}"
-  RAM                  = var.ram_gb * 1024
-  shutdown_command     = "echo 'vagrant' | sudo -S /sbin/halt -h -p"
+
+  host                 = "${var.vmware_center_esxi_host}"
   ssh_port             = 22
   ssh_timeout          = "12h"
+  ip_wait_timeout      = "1h"
   ssh_username         = "${var.user_username}"
   ssh_password         = "${var.user_password}"
-  vm_name              = "${var.vmware_center_vm_name}"
+  vm_name              = "ccdc-basebox-macos-${var.macos_version}.${formatdate("YYYYMMDD", timestamp())}"
   vcenter_server       = "${var.vmware_center_host}"
   username             = "${var.vmware_center_username}"
   password             = "${var.vmware_center_password}"
