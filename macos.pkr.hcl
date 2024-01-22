@@ -141,7 +141,8 @@ variable "boot_command" {
     "<leftSuperon><f5><leftSuperoff><wait10>",
     "<leftCtrlon><f2><leftCtrloff>",
     "w<down><down>",
-    "<enter>",
+    "<enter><wait2s>",
+    "<backspace><backspace>",
     "curl -o /var/root/bootstrap.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/bootstrap.sh<enter>",
     "chmod +x /var/root/bootstrap.sh<enter>",
     "PACKAGE_HTTP_SERVER=http://{{ .HTTPIP }}:{{ .HTTPPort}} /var/root/bootstrap.sh<enter>"
@@ -294,7 +295,8 @@ source "vsphere-iso" "macOS" {
     "<leftSuperon><wait2s><f5><wait2s><leftSuperoff><wait10>",
     "<leftCtrlon><wait2s><f2><wait2s><leftCtrloff>",
     "w<down><down>",
-    "<enter>",
+    "<enter><wait2s>",
+    "<backspace><backspace>",
     "curl -o /var/root/bootstrap.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/bootstrap.sh<enter>",
     "chmod +x /var/root/bootstrap.sh<enter>",
     "PACKAGE_HTTP_SERVER=http://{{ .HTTPIP }}:{{ .HTTPPort}} /var/root/bootstrap.sh<enter>"
