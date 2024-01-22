@@ -8,7 +8,7 @@ set -euo pipefail
 IFS=$'\n\t'
 shopt -s nullglob nocaseglob
 
-PACKAGES=("packer.pkg" "setupsshlogin.pkg" "SkipAppleSetupAssistant-1.0.1.pkg")
+PACKAGES=("packer.pkg" "setupsshlogin.pkg" "SkipAppleSetupAssistant-1.0.1.pkg" "vmware_tools.pkg")
 
 # format the disk
 diskutil eraseDisk APFS "Macintosh HD" disk0
