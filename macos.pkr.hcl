@@ -112,11 +112,11 @@ variable "iso_file_checksum" {
 }
 variable "user_password" {
   type = string
-  default = "vagrant"
+  default = "packer"
 }
 variable "user_username" {
   type = string
-  default = "vagrant"
+  default = "packer"
 }
 variable "artifactory_api_key" {
   type = string
@@ -142,7 +142,7 @@ variable "boot_command" {
     "<leftCtrlon><f2><leftCtrloff>",
     "w<down><down>",
     "<enter><wait2s>",
-    "<backspace><backspace>",
+    "<bs><bs><enter><wait2s>",
     "curl -o /var/root/bootstrap.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/bootstrap.sh<enter>",
     "chmod +x /var/root/bootstrap.sh<enter>",
     "PACKAGE_HTTP_SERVER=http://{{ .HTTPIP }}:{{ .HTTPPort}} /var/root/bootstrap.sh<enter>"
@@ -296,7 +296,7 @@ source "vsphere-iso" "macOS" {
     "<leftCtrlon><wait2s><f2><wait2s><leftCtrloff>",
     "w<down><down>",
     "<enter><wait2s>",
-    "<backspace><backspace>",
+    "<bs><bs><enter><wait2s>",
     "curl -o /var/root/bootstrap.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/bootstrap.sh<enter>",
     "chmod +x /var/root/bootstrap.sh<enter>",
     "PACKAGE_HTTP_SERVER=http://{{ .HTTPIP }}:{{ .HTTPPort}} /var/root/bootstrap.sh<enter>"
@@ -366,7 +366,6 @@ source "vsphere-iso" "macOS" {
   http_directory       = "http"
 
   host                 = "${var.vmware_center_esxi_host}"
-  ssh_port             = 22
   ssh_timeout          = "12h"
   ip_wait_timeout      = "1h"
   ssh_username         = "${var.user_username}"
