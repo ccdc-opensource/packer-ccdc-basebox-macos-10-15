@@ -1,7 +1,7 @@
 #!/bin/bash
 if [[ -z ${PACKAGE_HTTP_SERVER} ]]; then
-  echo "Please set the PACKAGE_HTTP_SERVER environment variable."
-  exit 1
+	echo "Please set the PACKAGE_HTTP_SERVER environment variable."
+	exit 1
 fi
 
 set -euo pipefail
@@ -18,28 +18,27 @@ diskutil eraseDisk APFS "Macintosh HD" disk0
 
 INSTALLPACKAGES=()
 for package in "${PACKAGES[@]}"; do
-  echo "Downloading ${package}"...
-  curl -o "/var/root/${package}" "${PACKAGE_HTTP_SERVER}/${package}"
-  INSTALLPACKAGES+=(--installpackage "${package}")
+	echo "Downloading ${package}"...
+	curl -o "/var/root/${package}" "${PACKAGE_HTTP_SERVER}/${package}"
+	INSTALLPACKAGES+=(--installpackage "${package}")
 done
 
 # run the installer with some error handling due to helper tool crashing sometimes
 retrycount=0
 retrylimit=5
-until [[ "${retrycount}" -ge "${retrylimit}" ]]
-do
-  installer=$(find "/Volumes/Image Volume" -name startosinstall)
-  ${installer} --agreetolicense "${INSTALLPACKAGES[@]}" --volume "/Volumes/Macintosh HD" && break
-  retrycount=$((retrycount+1)) 
-  echo "startosinstall failed. retrying in 20sec"
-  sleep 20
+until [[ ${retrycount} -ge ${retrylimit} ]]; do
+	installer=$(find "/Volumes/Image Volume" -name startosinstall)
+	${installer} --agreetolicense "${INSTALLPACKAGES[@]}" --volume "/Volumes/Macintosh HD" && break
+	retrycount=$((retrycount + 1))
+	echo "startosinstall failed. retrying in 20sec"
+	sleep 20
 done
 
-if [[ "$retrycount" -ge "$retrylimit" ]]; then
-  echo "startosinstall failed after ${retrylimit} attempts"
-  tail  -n 30 /var/log/install.log
-  exit 1
-fi  
+if [[ $retrycount -ge ${retrylimit} ]]; then
+	echo "startosinstall failed after ${retrylimit} attempts"
+	tail -n 30 /var/log/install.log
+	exit 1
+fi
 
 echo "Bootstrap Completed"
 exit 0
