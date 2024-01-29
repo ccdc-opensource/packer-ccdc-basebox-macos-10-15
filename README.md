@@ -17,6 +17,7 @@ Standard vagrant commands can be used to start, provision, stop the VM itself on
 Building the box requires studying, asking questions that have complicated answers and understanding what's going on as there's a lot of complexity under the hood and it's not possible (yet) to avoid it.
 
 ## Requirements to build this
+
 - MacOS 10.15
 - VMWare Fusion (licence required)
 - Vagrant
