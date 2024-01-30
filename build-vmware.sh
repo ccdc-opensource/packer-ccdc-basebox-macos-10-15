@@ -7,8 +7,8 @@ if [[ -z "${VAGRANT_HOME}" ]]; then
   exit 1
 fi
 
-MACOS_VERSION=10.15
-MACINBOX_IMAGE_NAME="macinbox-vagrant-10.15"
+MACOS_VERSION=10.14
+MACINBOX_IMAGE_NAME="macinbox-vagrant-10.14"
 LAST_MACINBOX_VERSION=$(vagrant box list | grep $MACINBOX_IMAGE_NAME | tail -n 1 | perl -n -e'/vmware_desktop, (.+)\)/ && print $1')
 echo "Using Vagrant box $MACINBOX_IMAGE_NAME, version $LAST_MACINBOX_VERSION"
 echo 'creating output directory'
@@ -31,4 +31,3 @@ packer build \
   -var 'box_basename=ccdc-basebox/macos-$MACOS_VERSION' \
   -var "macinbox_vmx_location=$VAGRANT_HOME/boxes/$MACINBOX_IMAGE_NAME/$LAST_MACINBOX_VERSION/vmware_desktop/" \
   ./packer-add-vmware-tools.json
-

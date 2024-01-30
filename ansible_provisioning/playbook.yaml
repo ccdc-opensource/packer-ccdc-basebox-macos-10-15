@@ -1,0 +1,35 @@
+---
+- hosts: all
+  gather_facts: true
+  vars:
+    ansible_host_key_checking: false
+    ansible_remote_tmp: /tmp/.ansible/
+  roles:
+    - role: ccdc.vagrant-base-box
+      vars:
+        github_repo_name: packer-basebox-macos
+    - role: ccdc.install-vm-tools
+      vars:
+        ansible_virtualization_type: VMware
+    - role: devsec.hardening.ssh_hardening
+      vars:
+        os_vars: {}
+        sshd_authenticationmethods: publickey,keyboard-interactive
+        ssh_host_keys_dir: /etc/ssh
+        sshd_path: /usr/sbin/sshd
+        sshd_moduli_file: /etc/ssh/moduli
+        ssh_owner: root
+        ssh_group: wheel
+        ssh_host_keys_owner: root
+        ssh_host_keys_group: wheel
+        ssh_host_keys_mode: "0600"
+        ssh_pam_support: false
+        ssh_kerberos_support: false
+        ssh_gssapi_support: false
+        ssh_client_compression: true
+        ssh_client_password_login: true
+        ssh_server_password_login: true
+        ssh_challengeresponseauthentication: true
+        sshd_disable_crypto_policy: false
+        ssh_server_enabled: false  # This is to avoid the ssh_hardening role trying to restart the service using Linux methods on macOS
+    - role: ccdc.compact-vm-image

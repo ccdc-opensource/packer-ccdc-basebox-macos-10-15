@@ -1,5 +1,7 @@
 *.box
-/output-vagrant/
-/output/packer-vmware/
-/packer_cache/
+.DS_Store
+macos-iso/
+packer_cache/
+output/
 vsphere-environment-do-not-add
+ansible_provisioning/roles
